@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerar QR Code com JavaScript</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Gerador QRCode</h1>
+  
+    <div class="area-label">
+      <label for="urlInput">Digite o endereço:</label>
+      <input type="text" id="urlInput" placeholder="https://exemplo.com">
+      <button id="generateBtn">Gerar</button>
+    </div>
+  </header>
+
+  <div class="container-qr">
+    <!-- Div onde o QR Code será exibido -->
+    <div id="qrcode"></div>
+    
+    <!-- Botão para baixar o QR Code -->
+    <a id="downloadBtn" href="#" style="display: none;">Baixar em SVG</a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script>
+    // Seleciona os elementos HTML
+    const inputElement = document.getElementById('urlInput');
+    const generateButton = document.getElementById('generateBtn');
+    const qrCodeElement = document.getElementById('qrcode');
+    const downloadButton = document.getElementById('downloadBtn');
+
+    // Adiciona um evento de clique ao botão
+    generateButton.addEventListener('click', () => {
+      // Obtém o valor do campo de entrada
+      const url = inputElement.value.trim();
+
+      // Limpa o conteúdo anterior do QR Code
+      qrCodeElement.innerHTML = '';
+      downloadButton.style.display = 'none';
+
+      // Verifica se o campo está vazio
+      if (!url) {
+        alert('Por favor, digite um endereço válido!');
+        return;
+      }
+
+      // Gera o QR Code como SVG
+      QRCode.toString(url, { type: 'svg' }, (error, svgString) => {
+        if (error) {
+          console.error(error);
+          alert('Erro ao gerar o QR Code!');
+        } else {
+          // Insere o QR Code gerado na div
+          qrCodeElement.innerHTML = svgString;
+
+          // Prepara o botão de download
+          const blob = new Blob([svgString], { type: 'image/svg+xml' });
+          const urlBlob = URL.createObjectURL(blob);
+
+          // Extrai o nome base do site
+          const siteName = new URL(url).hostname.replace('www.', ''); 
+          const fileName = `${siteName || 'qrcode'}.svg`; // Nome padrão se não for possível extrair
+
+          downloadButton.href = urlBlob;
+          downloadButton.download = fileName; // Define o nome do arquivo
+          downloadButton.style.display = 'inline-block'; // Torna o botão visível
+        }
+      });
+    });
+  </script>
+</body>
+</html>

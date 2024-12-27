@@ -1,0 +1,47 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px
+}
+
+#urlInput{
+    width: 400px;
+    height: 30px;
+}
+
+#generateBtn{
+    height: 34px;
+    padding-inline: 5px;
+}
+
+.container-qr{
+    display: flex;
+    justify-content: center ;
+    align-items: center;
+}
+
+#qrcode{
+    width: 350px;
+    height: 350px;
+}
+
+#downloadBtn{
+    width: 150px;
+    height: 40px;
+    border: 1px solid black;
+    background-color: #e5e5e5;
+    border-radius: 2px;
+    display: none;
+    text-align: center;
+    padding-top: 20px;
+    text-decoration: none;
+    color: black;
+
+}
