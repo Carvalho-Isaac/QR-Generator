@@ -1,6 +1,7 @@
 *{
     margin: 0;
     padding: 0;
+    font-family: Roboto, "Segoe UI", "Helvetica Neue", "Noto Sans", sans-serif, Arial;
 }
 
 header{
@@ -11,9 +12,18 @@ header{
     padding: 20px
 }
 
+.area-label{
+    text-align: center;
+}
+
 #urlInput{
-    width: 400px;
+    width: 325px;
     height: 30px;
+    margin-left: 5px;
+}
+
+#urlInput::placeholder{
+    padding-left: 10px;
 }
 
 #generateBtn{
@@ -23,6 +33,7 @@ header{
 
 .container-qr{
     display: flex;
+    flex-wrap: wrap;
     justify-content: center ;
     align-items: center;
 }
