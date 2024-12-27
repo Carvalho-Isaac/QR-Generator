@@ -17,9 +17,9 @@ header{
 }
 
 #urlInput{
-    width: 325px;
+    width: 346px;
     height: 30px;
-    margin-left: 5px;
+    margin-left: 0 5px 5px 0;
 }
 
 #urlInput::placeholder{
@@ -29,6 +29,7 @@ header{
 #generateBtn{
     height: 34px;
     padding-inline: 5px;
+    margin-top: 5px;
 }
 
 .container-qr{
