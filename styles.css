@@ -96,6 +96,11 @@ header {
     text-align: center;
     align-items: center;
     line-height: 34px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    max-width: calc(100vw - 125px);
 }
 
 .container-qr {
@@ -103,6 +108,7 @@ header {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 #qrcode {
@@ -111,13 +117,16 @@ header {
 }
 
 #downloadBtn {
+    padding-top: 5px;
     display: none;
-    gap: 5px;
-    flex-direction: column;
+    gap: 3px;
+    flex-direction: row;
+    flex-wrap: nowrap;
 }
 
 #downloadBtn button {
-    width: 125px;
+    width: 110px;
+    max-width: calc(30% * 100vw);
     height: 50px;
     border: 1px solid black;
     background-color: #e5e5e5e5;
@@ -130,10 +139,4 @@ header {
 
 #downloadBtn button:hover {
     background-color: #8eb672;
-}
-
-@media (max-width: 600px) {
-    #downloadBtn {
-        flex-direction: row;
-    }
 }

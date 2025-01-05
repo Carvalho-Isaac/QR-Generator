@@ -102,6 +102,8 @@ function renderQRCode(qrCodeData) {
       };
     }
   }
+
+  document.getElementById('downloadBtn').style.display = 'inline-block'; // Exibe o botão de download
 }
 
 
@@ -212,4 +214,28 @@ function downloadQRCodeAsJPEG() {
     document.body.removeChild(downloadLink);
     URL.revokeObjectURL(jpegUrl);
   }, 'image/jpeg');
+}
+
+function resetAll() {
+  // Remove a imagem selecionada
+  removeImage();
+
+  // Esconde botões de download e remoção de imagem
+  document.getElementById('downloadBtn').style.display = 'none';
+  document.getElementById('removeImageBtn').style.display = 'none';
+
+  // Limpa o conteúdo do canvas
+  const canvas = document.getElementById('qrcodeCanvas');
+  const ctx = canvas.getContext('2d');
+
+  // Redefine o tamanho do canvas para limpar completamente
+  canvas.width = 300; 
+  canvas.height = 300;
+
+  // Limpa o contexto
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Adiciona um fundo branco ao canvas, se necessário
+  ctx.fillStyle = 'white';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
