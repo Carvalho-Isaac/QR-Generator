@@ -50,36 +50,60 @@ function generateQRCode() {
     return;
   }
 
+  // Primeira vez, gera o QR Code
+  let qrCodeData = QRCode.create(qrContent, { errorCorrectionLevel: 'H' });
+  renderQRCode(qrCodeData);
+
+  // Segunda vez para reset e ajuste
+  qrCodeData = QRCode.create(qrContent, { errorCorrectionLevel: 'H' });
+  renderQRCode(qrCodeData);
+}
+
+function renderQRCode(qrCodeData) {
+  const moduleCount = qrCodeData.modules.size;
+  const moduleSize = 300 / moduleCount; // Tamanho de cada módulo no QR Code
+
   const canvas = document.getElementById('qrcodeCanvas');
   const ctx = canvas.getContext('2d');
-  const size = 300;
 
-  canvas.width = size;
-  canvas.height = size;
+  // Calcular o tamanho e posicionamento do QR Code no canvas
+  const qrCodeSize = moduleCount * moduleSize;
+  const offsetX = (canvas.width - qrCodeSize) / 2; // Centraliza horizontalmente
+  const offsetY = (canvas.height - qrCodeSize) / 2; // Centraliza verticalmente
 
-  QRCode.toCanvas(
-    canvas,
-    qrContent,
-    { width: size, margin: 1 },
-    function (error) {
-      if (error) {
-        console.error(error);
-        return;
-      }
+  canvas.width = canvas.height = 300; // Redefinir o tamanho do canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpa o canvas antes de desenhar
 
-      // Desenha a imagem no centro do QR Code
-      if (logoImage) {
-        const logoSize = size * 0.2; // 20% do tamanho do QR Code
-        const logoX = (size - logoSize) / 2;
-        const logoY = (size - logoSize) / 2;
-        ctx.drawImage(logoImage, logoX, logoY, logoSize, logoSize);
-      }
+  // Desenha o QR Code no canvas
+  qrCodeData.modules.data.forEach((isDark, index) => {
+    const x = (index % moduleCount) * moduleSize + offsetX;
+    const y = Math.floor(index / moduleCount) * moduleSize + offsetY;
+
+    if (isDark) {
+      ctx.fillStyle = 'black';
+      ctx.fillRect(x, y, moduleSize, moduleSize);
     }
-  );
-  document.getElementById('removeImageBtn').style.display = 'none';
+  });
 
-  document.getElementById('downloadBtn').style.display = 'block';
+  // Adiciona a imagem, se for fornecida
+  if (logoImage) {
+    let logoSizeInModules = Math.floor(moduleCount * 0.2); // Tamanho inicial da imagem em módulos
+    logoSizeInModules = adjustToParity(logoSizeInModules, moduleCount); // Ajusta para paridade correta
+    const logoSize = moduleSize * logoSizeInModules; // Tamanho da imagem em pixels
+    const logoX = (canvas.width - logoSize) / 2; // Centraliza horizontalmente
+    const logoY = (canvas.height - logoSize) / 2; // Centraliza verticalmente
+
+    const logoBase64 = getImageBase64(logoImage, logoSize, logoSize);
+    if (logoBase64) {
+      const img = new Image();
+      img.src = logoBase64;
+      img.onload = () => {
+        ctx.drawImage(img, logoX, logoY, logoSize, logoSize);
+      };
+    }
+  }
 }
+
 
 // Gerar nome do arquivo
 function generateFileName(url, extension) {
@@ -87,6 +111,14 @@ function generateFileName(url, extension) {
   const safeName = cleanedUrl.replace(/[^a-zA-Z0-9._-]/g, '_');
   const trimmedName = safeName.length > 50 ? safeName.substring(0, 50) : safeName;
   return `${trimmedName}.${extension}`;
+}
+
+// Ajusta o número de módulos para ter a mesma paridade do total de módulos no QR Code
+function adjustToParity(imageModules, totalModules) {
+  if ((totalModules % 2 === 0 && imageModules % 2 !== 0) || (totalModules % 2 !== 0 && imageModules % 2 === 0)) {
+    imageModules += 1; // Ajusta para a mesma paridade
+  }
+  return imageModules;
 }
 
 // Download QR Code como SVG
@@ -104,9 +136,11 @@ function downloadQRCodeAsSVG() {
   const moduleCount = qrCodeData.modules.size;
   const moduleSize = 300 / moduleCount;
 
+  // Inicializa o SVG com o fundo branco
   let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300">`;
-  svgContent += `<rect width="300" height="300" fill="white" />`;
+  svgContent += `<rect width="300" height="300" fill="white" />`; // Fundo branco
 
+  // Adiciona os quadrados do QR Code
   qrCodeData.modules.data.forEach((isDark, index) => {
     const x = (index % moduleCount) * moduleSize;
     const y = Math.floor(index / moduleCount) * moduleSize;
@@ -116,10 +150,13 @@ function downloadQRCodeAsSVG() {
     }
   });
 
+  // Adiciona a imagem central, se existir
   if (logoImage) {
-    const logoSize = 60;
-    const logoX = (300 - logoSize) / 2;
-    const logoY = (300 - logoSize) / 2;
+    let logoSizeInModules = 7; // Tamanho inicial da imagem em módulos
+    logoSizeInModules = adjustToParity(logoSizeInModules, moduleCount); // Ajusta para ter a mesma paridade do QR Code
+    const logoSize = moduleSize * logoSizeInModules; // Converte para pixels
+    const logoX = (300 - logoSize) / 2; // Centraliza horizontalmente
+    const logoY = (300 - logoSize) / 2; // Centraliza verticalmente
 
     const logoBase64 = getImageBase64(logoImage, logoSize, logoSize);
     if (logoBase64) {
@@ -127,7 +164,7 @@ function downloadQRCodeAsSVG() {
     }
   }
 
-  svgContent += `</svg>`;
+  svgContent += `</svg>`; // Fecha o SVG
 
   const svgBlob = new Blob([svgContent], { type: 'image/svg+xml' });
   const svgUrl = URL.createObjectURL(svgBlob);
