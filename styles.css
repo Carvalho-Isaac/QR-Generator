@@ -1,23 +1,27 @@
-*{
+* {
     margin: 0;
     padding: 0;
     font-family: Roboto, "Segoe UI", "Helvetica Neue", "Noto Sans", sans-serif, Arial;
 }
 
-header{
+header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
     padding-top: 20px
 }
 
-.area-label{
+.container-header-flex{
+    display: flex;
+    flex-direction: column;
+}
+
+.area-label {
     text-align: center;
     align-items: center;
 }
 
-.area-input{
+.area-input {
     display: flex;
     flex-direction: row;
     gap: 3px;
@@ -26,47 +30,93 @@ header{
     max-width: 600px;
 }
 
-.area-input input{
+.area-input input {
     flex-grow: 1;
     height: 30px;
     min-width: 100px;
     padding-left: 5px
 }
 
-#qrText::placeholder{
+#qrText::placeholder {
     padding-left: 5px;
 }
 
-#prefixSelect{
+#prefixSelect {
     height: 34px;
     flex-shrink: 0;
 }
 
-.generateBtn{
+.generateBtn {
     height: 34px;
     padding-inline: 5px;
     flex-shrink: 0;
 }
 
-.container-qr{
+.btn-remove {
+    border-radius: 3px;
+    width: 34px;
+    border: 1px solid black;
+}
+
+.imageUpload {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 5px;
+    padding-block: 5px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.imageUpload-input{
+    height: 34px;
+    width: 60px;
+}
+
+.imageUpload-input::before {
+    display: block;
+    content: "Logo:";
+    position: absolute;
+    width: 100%;
+
+    background: #007bff;
+    color: #ffff;
+    border-radius: 3px;
+
+    text-align: center;
+    line-height: 34px;
+    padding-inline: 5px;
+    cursor: pointer;
+
+    width: 50px;
+} 
+
+.imageUpload p {
+    text-align: center;
+    align-items: center;
+    line-height: 34px;
+}
+
+.container-qr {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center ;
+    justify-content: center;
     align-items: center;
 }
 
-#qrcode{
+#qrcode {
     width: 350px;
     height: 350px;
 }
 
-#downloadBtn{
+#downloadBtn {
     display: none;
     gap: 5px;
     flex-direction: column;
 }
 
-#downloadBtn button{
+#downloadBtn button {
     width: 125px;
     height: 50px;
     border: 1px solid black;
@@ -78,12 +128,12 @@ header{
     cursor: pointer;
 }
 
-#downloadBtn button:hover{
+#downloadBtn button:hover {
     background-color: #8eb672;
 }
 
 @media (max-width: 600px) {
-    #downloadBtn{
+    #downloadBtn {
         flex-direction: row;
     }
 }

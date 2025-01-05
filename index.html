@@ -13,21 +13,30 @@
   <header>
     <div class="area-label">
       <h1>Gerador de QR Code</h1>
-      <div class="area-input">
-        <label for="prefixSelect">Site:</label>
-        <select id="prefixSelect">
-          <option value=""></option>
-          <option value="http://">http://</option>
-          <option value="https://">https://</option>
-        </select>
-        <input type="text" id="qrText" placeholder="www.exemplo.com">
-        <button class="generateBtn" onclick="generateQRCode()">Gerar</button>
+      <div class="container-header-flex">
+        <div class="area-input">
+          <label for="prefixSelect">Site:</label>
+          <select id="prefixSelect">
+            <option value=""></option>
+            <option value="http://">http://</option>
+            <option value="https://">https://</option>
+          </select>
+          <input type="text" id="qrText" placeholder="www.exemplo.com">
+          <button class="generateBtn" onclick="generateQRCode()">Gerar</button>
+        </div>
+      </div>
+      <div class="imageUpload" id="imageUpload">
+        <input class="imageUpload-input" type="file" id="imageInput" accept="image/*" onchange="handleImageSelection()">
+        <p id="fileMessage"></p>
+        <button class="btn-remove" id="removeImageBtn" style="display: none;" onclick="removeImage()">x</button>
       </div>
     </div>
   </header>
 
   <div class="container-qr">
-    <div id="qrcode"></div>
+    <div id="qrcode-container">
+      <canvas id="qrcodeCanvas"></canvas>
+    </div>
     <div id="downloadBtn">
       <button onclick="downloadQRCodeAsSVG()">Baixar SVG</button>
       <button onclick="downloadQRCodeAsJPEG()">Baixar JPEG</button>
