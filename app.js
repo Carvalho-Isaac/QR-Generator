@@ -106,7 +106,6 @@ function renderQRCode(qrCodeData) {
   document.getElementById('downloadBtn').style.display = 'inline-block'; // Exibe o botão de download
 }
 
-
 // Gerar nome do arquivo
 function generateFileName(url, extension) {
   const cleanedUrl = url.replace(/^https?:\/\//, '');
@@ -194,6 +193,21 @@ function getImageBase64(img, width, height) {
 // Download QR Code como JPEG
 function downloadQRCodeAsJPEG() {
   const canvas = document.getElementById('qrcodeCanvas');
+  const ctx = canvas.getContext('2d');
+
+  // Garantir que o fundo seja branco
+  const tempCanvas = document.createElement('canvas');
+  tempCanvas.width = canvas.width;
+  tempCanvas.height = canvas.height;
+  const tempCtx = tempCanvas.getContext('2d');
+
+  // Desenhar fundo branco
+  tempCtx.fillStyle = 'white';
+  tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+
+  // Copiar o conteúdo do QR Code para o canvas temporário
+  tempCtx.drawImage(canvas, 0, 0);
+
   const prefix = document.getElementById('prefixSelect').value;
   const text = document.getElementById('qrText').value.trim();
   const qrContent = prefix + text;
@@ -203,14 +217,18 @@ function downloadQRCodeAsJPEG() {
     return;
   }
 
-  canvas.toBlob(function (blob) {
+  // Converter o canvas temporário para blob
+  tempCanvas.toBlob(function (blob) {
     const fileName = generateFileName(qrContent, 'jpeg');
     const jpegUrl = URL.createObjectURL(blob);
+
     const downloadLink = document.createElement('a');
     downloadLink.href = jpegUrl;
     downloadLink.download = fileName;
+
     document.body.appendChild(downloadLink);
     downloadLink.click();
+
     document.body.removeChild(downloadLink);
     URL.revokeObjectURL(jpegUrl);
   }, 'image/jpeg');
@@ -229,7 +247,7 @@ function resetAll() {
   const ctx = canvas.getContext('2d');
 
   // Redefine o tamanho do canvas para limpar completamente
-  canvas.width = 300; 
+  canvas.width = 300;
   canvas.height = 300;
 
   // Limpa o contexto
