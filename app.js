@@ -50,59 +50,53 @@ function generateQRCode() {
     return;
   }
 
-  // Primeira vez, gera o QR Code
-  let qrCodeData = QRCode.create(qrContent, { errorCorrectionLevel: 'H' });
-  renderQRCode(qrCodeData);
-
-  // Segunda vez para reset e ajuste
-  qrCodeData = QRCode.create(qrContent, { errorCorrectionLevel: 'H' });
-  renderQRCode(qrCodeData);
-}
-
-function renderQRCode(qrCodeData) {
+  const qrCodeData = QRCode.create(qrContent, { errorCorrectionLevel: 'H' });
   const moduleCount = qrCodeData.modules.size;
-  const moduleSize = 300 / moduleCount; // Tamanho de cada módulo no QR Code
 
   const canvas = document.getElementById('qrcodeCanvas');
   const ctx = canvas.getContext('2d');
 
-  // Calcular o tamanho e posicionamento do QR Code no canvas
-  const qrCodeSize = moduleCount * moduleSize;
-  const offsetX = (canvas.width - qrCodeSize) / 2; // Centraliza horizontalmente
-  const offsetY = (canvas.height - qrCodeSize) / 2; // Centraliza verticalmente
+  const canvasSize = 300; // Define o tamanho do canvas
+  const moduleSize = Math.floor(canvasSize / moduleCount); // Calcula o tamanho exato de cada módulo
 
-  canvas.width = canvas.height = 300; // Redefinir o tamanho do canvas
-  ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpa o canvas antes de desenhar
+  // Ajusta o tamanho do canvas
+  canvas.width = canvas.height = moduleSize * moduleCount;
 
-  // Desenha o QR Code no canvas
+  // Limpa o canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Desenha os módulos do QR Code
   qrCodeData.modules.data.forEach((isDark, index) => {
-    const x = (index % moduleCount) * moduleSize + offsetX;
-    const y = Math.floor(index / moduleCount) * moduleSize + offsetY;
+    const col = index % moduleCount;
+    const row = Math.floor(index / moduleCount);
+    const x = col * moduleSize;
+    const y = row * moduleSize;
 
-    if (isDark) {
-      ctx.fillStyle = 'black';
-      ctx.fillRect(x, y, moduleSize, moduleSize);
-    }
+    ctx.fillStyle = isDark ? 'black' : 'white';
+    ctx.fillRect(x, y, moduleSize, moduleSize);
   });
 
-  // Adiciona a imagem, se for fornecida
+  // Adiciona a imagem, se fornecida
   if (logoImage) {
-    let logoSizeInModules = Math.floor(moduleCount * 0.2); // Tamanho inicial da imagem em módulos
-    logoSizeInModules = adjustToParity(logoSizeInModules, moduleCount); // Ajusta para paridade correta
+    const logoSizeInModules = Math.floor(moduleCount * 0.25); // 20% do tamanho do QR Code
     const logoSize = moduleSize * logoSizeInModules; // Tamanho da imagem em pixels
-    const logoX = (canvas.width - logoSize) / 2; // Centraliza horizontalmente
-    const logoY = (canvas.height - logoSize) / 2; // Centraliza verticalmente
 
-    const logoBase64 = getImageBase64(logoImage, logoSize, logoSize);
+    // Ajuste da paridade
+    const adjustedLogoSizeInModules = adjustToParity(logoSizeInModules, moduleCount);
+    const adjustedLogoSize = moduleSize * adjustedLogoSizeInModules;
+
+    const logoX = (canvas.width - adjustedLogoSize) / 2; // Centraliza horizontalmente
+    const logoY = (canvas.height - adjustedLogoSize) / 2; // Centraliza verticalmente
+
+    const logoBase64 = getImageBase64(logoImage, adjustedLogoSize, adjustedLogoSize);
     if (logoBase64) {
       const img = new Image();
       img.src = logoBase64;
       img.onload = () => {
-        ctx.drawImage(img, logoX, logoY, logoSize, logoSize);
+        ctx.drawImage(img, logoX, logoY, adjustedLogoSize, adjustedLogoSize);
       };
     }
   }
-
   document.getElementById('downloadBtn').style.display = 'inline-block'; // Exibe o botão de download
 }
 
@@ -135,33 +129,46 @@ function downloadQRCodeAsSVG() {
 
   const qrCodeData = QRCode.create(qrContent, { errorCorrectionLevel: 'H' });
   const moduleCount = qrCodeData.modules.size;
-  const moduleSize = 300 / moduleCount;
+
+  const canvasSize = 300; // Tamanho do SVG (igual ao tamanho do canvas)
+  const moduleSize = Math.floor(canvasSize / moduleCount); // Calcula o tamanho exato de cada módulo
+
+  // Ajuste o tamanho para múltiplos do módulo
+  const adjustedCanvasSize = moduleSize * moduleCount;
 
   // Inicializa o SVG com o fundo branco
-  let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300">`;
-  svgContent += `<rect width="300" height="300" fill="white" />`; // Fundo branco
+  let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${adjustedCanvasSize} ${adjustedCanvasSize}" width="${adjustedCanvasSize}" height="${adjustedCanvasSize}">`;
+  svgContent += `<rect width="${adjustedCanvasSize}" height="${adjustedCanvasSize}" fill="white" />`; // Fundo branco
 
-  // Adiciona os quadrados do QR Code
+  // Adiciona os módulos do QR Code
   qrCodeData.modules.data.forEach((isDark, index) => {
-    const x = (index % moduleCount) * moduleSize;
-    const y = Math.floor(index / moduleCount) * moduleSize;
+    const col = index % moduleCount;
+    const row = Math.floor(index / moduleCount);
+    const x = col * moduleSize;
+    const y = row * moduleSize;
 
     if (isDark) {
       svgContent += `<rect x="${x}" y="${y}" width="${moduleSize}" height="${moduleSize}" fill="black" />`;
     }
   });
 
-  // Adiciona a imagem central, se existir
+  // Adiciona a imagem, se fornecida
   if (logoImage) {
-    let logoSizeInModules = 7; // Tamanho inicial da imagem em módulos
-    logoSizeInModules = adjustToParity(logoSizeInModules, moduleCount); // Ajusta para ter a mesma paridade do QR Code
-    const logoSize = moduleSize * logoSizeInModules; // Converte para pixels
-    const logoX = (300 - logoSize) / 2; // Centraliza horizontalmente
-    const logoY = (300 - logoSize) / 2; // Centraliza verticalmente
+    const logoSizeInModules = Math.floor(moduleCount * 0.25); // 20% do tamanho do QR Code
+    const logoSize = moduleSize * logoSizeInModules; // Tamanho da imagem em pixels
 
-    const logoBase64 = getImageBase64(logoImage, logoSize, logoSize);
+    // Ajuste da paridade do tamanho da imagem
+    const adjustedLogoSizeInModules = adjustToParity(logoSizeInModules, moduleCount);
+    const adjustedLogoSize = moduleSize * adjustedLogoSizeInModules;
+
+    // Calcula a posição para centralizar a imagem
+    const logoX = (adjustedCanvasSize - adjustedLogoSize) / 2; // Centraliza horizontalmente
+    const logoY = (adjustedCanvasSize - adjustedLogoSize) / 2; // Centraliza verticalmente
+
+    // Converte a imagem em base64
+    const logoBase64 = getImageBase64(logoImage, adjustedLogoSize, adjustedLogoSize);
     if (logoBase64) {
-      svgContent += `<image href="${logoBase64}" x="${logoX}" y="${logoY}" width="${logoSize}" height="${logoSize}" />`;
+      svgContent += `<image href="${logoBase64}" x="${logoX}" y="${logoY}" width="${adjustedLogoSize}" height="${adjustedLogoSize}" />`;
     }
   }
 
