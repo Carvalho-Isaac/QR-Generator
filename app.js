@@ -11,6 +11,7 @@ function handleImageSelection() {
   const fileInput = document.getElementById('imageInput');
   const fileMessage = document.getElementById('fileMessage');
   const removeImageBtn = document.getElementById('removeImageBtn');
+  const switcherSize = document.getElementById('switcher-size');
 
   if (fileInput.files.length > 0) {
     const file = fileInput.files[0];
@@ -22,6 +23,7 @@ function handleImageSelection() {
       logoImage.onload = () => {
         fileMessage.textContent = `Imagem selecionada: ${file.name}`;
         removeImageBtn.style.display = 'inline-block';
+        switcherSize.style.display = 'block';
       };
     };
 

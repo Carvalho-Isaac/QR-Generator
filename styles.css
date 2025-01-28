@@ -11,7 +11,7 @@ header {
     padding-top: 20px
 }
 
-.container-header-flex{
+.container-header-flex {
     display: flex;
     flex-direction: column;
 }
@@ -58,6 +58,55 @@ header {
     border: 1px solid black;
 }
 
+.toggle-input {
+    display: none;
+}
+
+.switcher-size{
+    display: none;
+}
+
+/* Estilo inicial do botão */
+.sizeqr {
+    cursor: pointer;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    /* padding-inline: 5px; */
+    /* font-size: 16px; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+    width: 13rem;
+}
+
+.toggle-input:checked+.switcher-sizeqr .sizeqr .size-sqr {
+    background-color: #f0f0f0;
+    color: black;
+}
+
+.toggle-input:not(:checked)+.switcher-sizeqr .sizeqr .size-sqr {
+    background-color: #007BFF;
+    color: white;
+}
+
+.toggle-input:checked+.switcher-sizeqr .sizeqr .size-rect {
+    background-color: #007BFF;
+    color: white;
+}
+
+/* Estilo dos spans */
+.size-sqr,
+.size-rect {
+    height: 100%;
+    padding-inline: 1rem;
+    height: 34px;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+}
+
 .imageUpload {
     display: flex;
     position: relative;
@@ -69,7 +118,7 @@ header {
     margin: 0;
 }
 
-.imageUpload-input{
+.imageUpload-input {
     height: 34px;
     width: 60px;
 }
@@ -90,7 +139,7 @@ header {
     cursor: pointer;
 
     width: 50px;
-} 
+}
 
 .imageUpload p {
     text-align: center;
