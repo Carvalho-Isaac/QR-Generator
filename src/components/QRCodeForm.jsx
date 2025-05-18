@@ -92,7 +92,7 @@ const QRCodeForm = ({
 
                          {selectedImage && (
                               <div className="size-selector">
-                                   <label htmlFor="imageSize" className="form-label">Tamanho da imagem:</label>
+                                   <label htmlFor="imageSize" className="form-label">Tamanho:</label>
                                    <select
                                         id="imageSize"
                                         value={imageSize}
