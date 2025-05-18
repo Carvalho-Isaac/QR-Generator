@@ -1,64 +1,13 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gerador de QR Code</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-</head>
-
-<body>
-  <header>
-    <div class="area-label">
-      <h1>Gerador de QR Code</h1>
-      <div class="container-header-flex">
-        <div class="area-input">
-          <label for="prefixSelect">Site:</label>
-          <select id="prefixSelect">
-            <option value=""></option>
-            <option value="http://">http://</option>
-            <option value="https://">https://</option>
-          </select>
-          <input type="text" id="qrText" placeholder="www.exemplo.com">
-          <button class="generateBtn" onclick="generateQRCode()">Gerar</button>
-        </div>
-      </div>
-      <div class="imageUpload" id="imageUpload">
-        <input class="imageUpload-input" type="file" id="imageInput" accept="image/*" onchange="handleImageSelection()">
-        <p id="fileMessage">Nenhuma imagem selecionada</p>
-        <button class="btn-remove" id="removeImageBtn" style="display: none;" onclick="removeImage()">x</button>
-      </div>
-      <div class="switcher-size" id="switcher-size">
-        <!-- O checkbox controla o estado -->
-        <input type="checkbox" id="toggle-input" class="toggle-input">
-        
-        <!-- A área interativa vinculada ao checkbox -->
-        <label for="toggle-input" class="switcher-sizeqr">
-          <div class="sizeqr">
-            <span class="size-sqr">Quadrado</span>
-            <span class="size-rect">Retângulo</span>
-          </div>
-        </label>
-      </div>
-    
-
-    </div>
-  </header>
-
-  <div class="container-qr">
-    <div id="qrcode-container">
-      <canvas id="qrcodeCanvas"></canvas>
-    </div>
-    <div id="downloadBtn">
-      <button onclick="downloadQRCodeAsSVG()">Baixar SVG</button>
-      <button onclick="downloadQRCodeAsJPEG()">Baixar JPEG</button>
-      <button onclick="resetAll()">Limpar</button>
-    </div>
-  </div>
-
-  <script src="app.js"></script>
-</body>
-
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/qr.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gerador de QR Code</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
