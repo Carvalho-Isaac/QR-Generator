@@ -75,7 +75,7 @@ const QRCodeForm = ({
 
                     <div className="options-container">
                          <div className="toggle-container">
-                              <span className={`toggle-text ${isSquare ? 'toggle-active' : 'toggle-inactive'}`}>Quadrado</span>
+                              <span className={`toggle-text ${isSquare ? 'toggle-active' : 'toggle-inactive'}`}>🞓</span>
                               <label className="toggle-switch">
                                    <input
                                         type="checkbox"
@@ -87,7 +87,7 @@ const QRCodeForm = ({
                                    <div className={`toggle-bg ${!isSquare ? 'toggle-active-bg' : ''}`}></div>
                                    <div className={`toggle-circle ${!isSquare ? 'toggle-active-circle' : ''}`}></div>
                               </label>
-                              <span className={`toggle-text ${!isSquare ? 'toggle-active' : 'toggle-inactive'}`}>Retângulo</span>
+                              <span className={`toggle-text ${!isSquare ? 'toggle-active' : 'toggle-inactive'}`}>▮</span>
                          </div>
 
                          {selectedImage && (
