@@ -1,6 +1,6 @@
 # Gerador de QR Code
 
-Um aplicativo moderno para geração de QR Codes com opções avançadas, desenvolvido com React, Vite e TailwindCSS.
+Um aplicativo moderno para geração de QR Codes com opções avançadas, desenvolvido com React e Vite.
 
 ## Funcionalidades
 
@@ -14,25 +14,4 @@ Um aplicativo moderno para geração de QR Codes com opções avançadas, desenv
 
 - [React](https://reactjs.org/)
 - [Vite](https://vitejs.dev/)
-- [TailwindCSS](https://tailwindcss.com/)
 - [QRCode.js](https://github.com/soldair/node-qrcode)
-
-## Como Usar
-
-1. Clone o repositório
-2. Instale as dependências:
-   ```
-   npm install
-   ```
-3. Execute o projeto em modo de desenvolvimento:
-   ```
-   npm run dev
-   ```
-4. Para build de produção:
-   ```
-   npm run build
-   ```
-
-## Licença
-
-Este projeto está sob a licença MIT.
