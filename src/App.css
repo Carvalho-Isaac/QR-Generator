@@ -287,6 +287,9 @@
   margin-left: 0.25rem;
   font-size: 0.875rem;
   font-weight: 500;
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
 
 .toggle-active {
