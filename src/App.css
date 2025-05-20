@@ -279,17 +279,20 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  cursor: pointer;
 }
 
 .toggle-text {
-  margin-right: 0.25rem;
-  margin-left: 0.25rem;
+  margin-right: 0.3rem;
+  margin-left: 0.3rem;
   font-size: 0.875rem;
   font-weight: 500;
   align-items: center;
   justify-content: center;
   display: flex;
+}
+
+.toggle-text svg{
+  padding-left: .1rem;
 }
 
 .toggle-active {
@@ -317,6 +320,7 @@
   display: inline-block;
   width: 3rem;
   height: 1.5rem;
+  cursor: pointer;
 }
 
 .toggle-bg {
