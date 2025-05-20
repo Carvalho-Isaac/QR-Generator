@@ -29,7 +29,11 @@ const Tooltip = ({ children, content }) => {
                               borderRadius: '4px',
                               fontSize: '12px',
                               zIndex: 1000,
-                              pointerEvents: 'none'
+                              pointerEvents: 'none',
+                              userSelect: 'none',
+                              WebkitUserSelect: 'none',
+                              MozUserSelect: 'none',
+                              msUserSelect: 'none'
                          }}
                          {...getFloatingProps()}
                     >

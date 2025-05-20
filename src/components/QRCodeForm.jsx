@@ -78,7 +78,11 @@ const QRCodeForm = ({
                     <div className="options-container">
                          <div className="toggle-container">
                               <Tooltip content="Formato Quadrado">
-                                   <span className={`toggle-text ${isSquare ? 'toggle-active' : 'toggle-inactive'}`}>
+                                   <span
+                                        className={`toggle-text ${isSquare ? 'toggle-active' : 'toggle-inactive'}`}
+                                        onClick={() => setIsSquare(true)}
+                                        style={{ cursor: 'pointer' }}
+                                   >
                                         <svg width="24" height="24" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                              <path d="M4 4H18V18H4V4Z" fill="currentColor" />
                                              <path d="M1 7.31579V1H7.31579M14.6842 1H21V7.31579M21 14.6842V21H14.6842M7.31579 21H1V14.6842" stroke="currentColor" strokeWidth="2" />
@@ -97,7 +101,11 @@ const QRCodeForm = ({
                                    <div className={`toggle-circle ${!isSquare ? 'toggle-active-circle' : ''}`}></div>
                               </label>
                               <Tooltip content="Formato Livre">
-                                   <span className={`toggle-text ${!isSquare ? 'toggle-active' : 'toggle-inactive'}`}>
+                                   <span
+                                        className={`toggle-text ${!isSquare ? 'toggle-active' : 'toggle-inactive'}`}
+                                        onClick={() => setIsSquare(false)}
+                                        style={{ cursor: 'pointer' }}
+                                   >
                                         <svg width="24" height="24" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                              <path d="M4 7H18V15H4V7Z" fill="currentColor" />
                                              <path d="M1 7V1H7.31579M15 1H21V7M21 15V21H15M7 21H1V15" stroke="currentColor" strokeWidth="2" />
