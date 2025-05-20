@@ -1,3 +1,5 @@
+import Tooltip from './Tooltip';
+
 const QRCodeForm = ({
      qrText,
      setQrText,
@@ -75,46 +77,52 @@ const QRCodeForm = ({
 
                     <div className="options-container">
                          <div className="toggle-container">
-                              <span className={`toggle-text ${isSquare ? 'toggle-active' : 'toggle-inactive'}`}><svg width="24" height="24" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                   <path d="M4 4H18V18H4V4Z" fill="currentColor" />
-                                   <path d="M1 7.31579V1H7.31579M14.6842 1H21V7.31579M21 14.6842V21H14.6842M7.31579 21H1V14.6842" stroke="currentColor" stroke-width="2" />
-                              </svg>
-                         </span>
-                         <label className="toggle-switch">
-                              <input
-                                   type="checkbox"
-                                   id="toggle-input"
-                                   className="toggle-input"
-                                   checked={!isSquare}
-                                   onChange={() => setIsSquare(!isSquare)}
-                              />
-                              <div className={`toggle-bg ${!isSquare ? 'toggle-active-bg' : ''}`}></div>
-                              <div className={`toggle-circle ${!isSquare ? 'toggle-active-circle' : ''}`}></div>
-                         </label>
-                         <span className={`toggle-text ${!isSquare ? 'toggle-active' : 'toggle-inactive'}`}><svg width="24" height="24" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M4 7H18V15H4V7Z" fill="currentColor" />
-                              <path d="M1 7V1H7.31579M15 1H21V7M21 15V21H15M7 21H1V15" stroke="currentColor" stroke-width="2" />
-                         </svg>
-                         </span>
-                    </div>
-
-                    {selectedImage && (
-                         <div className="size-selector">
-                              <label htmlFor="imageSize" className="form-label">Tamanho:</label>
-                              <select
-                                   id="imageSize"
-                                   value={imageSize}
-                                   onChange={(e) => setImageSize(Number(e.target.value))}
-                                   className="form-select"
-                              >
-                                   <option value="10">10%</option>
-                                   <option value="20">20%</option>
-                                   <option value="30">30%</option>
-                              </select>
+                              <Tooltip content="Formato Quadrado">
+                                   <span className={`toggle-text ${isSquare ? 'toggle-active' : 'toggle-inactive'}`}>
+                                        <svg width="24" height="24" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                             <path d="M4 4H18V18H4V4Z" fill="currentColor" />
+                                             <path d="M1 7.31579V1H7.31579M14.6842 1H21V7.31579M21 14.6842V21H14.6842M7.31579 21H1V14.6842" stroke="currentColor" strokeWidth="2" />
+                                        </svg>
+                                   </span>
+                              </Tooltip>
+                              <label className="toggle-switch">
+                                   <input
+                                        type="checkbox"
+                                        id="toggle-input"
+                                        className="toggle-input"
+                                        checked={!isSquare}
+                                        onChange={() => setIsSquare(!isSquare)}
+                                   />
+                                   <div className={`toggle-bg ${!isSquare ? 'toggle-active-bg' : ''}`}></div>
+                                   <div className={`toggle-circle ${!isSquare ? 'toggle-active-circle' : ''}`}></div>
+                              </label>
+                              <Tooltip content="Formato Livre">
+                                   <span className={`toggle-text ${!isSquare ? 'toggle-active' : 'toggle-inactive'}`}>
+                                        <svg width="24" height="24" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                             <path d="M4 7H18V15H4V7Z" fill="currentColor" />
+                                             <path d="M1 7V1H7.31579M15 1H21V7M21 15V21H15M7 21H1V15" stroke="currentColor" strokeWidth="2" />
+                                        </svg>
+                                   </span>
+                              </Tooltip>
                          </div>
-                    )}
+
+                         {selectedImage && (
+                              <div className="size-selector">
+                                   <label htmlFor="imageSize" className="form-label">Tamanho:</label>
+                                   <select
+                                        id="imageSize"
+                                        value={imageSize}
+                                        onChange={(e) => setImageSize(Number(e.target.value))}
+                                        className="form-select"
+                                   >
+                                        <option value="10">10%</option>
+                                        <option value="20">20%</option>
+                                        <option value="30">30%</option>
+                                   </select>
+                              </div>
+                         )}
+                    </div>
                </div>
-          </div >
           </>
      );
 };

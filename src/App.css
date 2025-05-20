@@ -200,13 +200,13 @@
   max-width: 95vw;
 }
 
-@media (max-width: 630px) {
+/* @media (max-width: 630px) {
 
   .tools-group {
-    /* flex-direction: column; */
+    flex-direction: column;
   }
 
-}
+} */
 
 @media (max-width: 768px) {
   .header-title {
@@ -291,8 +291,58 @@
   display: flex;
 }
 
-.toggle-text svg{
+.toggle-text svg {
   padding-left: .1rem;
+}
+
+/* Estilização do tooltip */
+.toggle-text svg[title] {
+  position: relative;
+}
+
+.toggle-text svg[title]::before {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 8px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+  pointer-events: none;
+  margin-bottom: 5px;
+}
+
+.toggle-text svg[title]:hover::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Adiciona uma seta ao tooltip */
+.toggle-text svg[title]::after {
+  content: '';
+  position: absolute;
+  bottom: calc(100% - 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+  pointer-events: none;
+}
+
+.toggle-text svg[title]:hover::after {
+  opacity: 1;
+  visibility: visible;
 }
 
 .toggle-active {
@@ -436,6 +486,6 @@
   height: 63px;
 }
 
-.size-selector .form-select {
-  /* width: 55px; */
-}
+/* .size-selector .form-select { */
+/* width: 55px; */
+/* } */
